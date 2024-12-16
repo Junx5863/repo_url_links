@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Setup Dart
       uses: dart-lang/setup-dart@v1
 
     - name: Install dependencies
@@ -48,4 +50,5 @@ jobs:
           --dart-define=BASE_URL=${{ github.event.inputs.base_url }} \
           --dart-define=SERVICE_NAME=${{ github.event.inputs.service_name }}
 
-    - name: Verify Buil
+    - name: Verify Build
+      run: echo "Build successful"
