@@ -8,7 +8,7 @@ class RickMortyServices {
 
   Future<CharacterModel> getCharacterRickMorty() async {
     try {
-      final response = await dio.get('$_baseUrl/character');
+      final response = await dio.get(_baseUrl);
       if (response.statusCode == 200) {
         return CharacterModel.fromJson(response.data);
       } else {
