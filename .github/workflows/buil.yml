@@ -22,11 +22,8 @@ jobs:
     - name: Setup Dart
       uses: dart-lang/setup-dart@v1
 
-    - name: Debug environment
-      run: |
-        dart --version
-        flutter --version
-        flutter doctor
+    - name: Install Pub Dependencies
+      run: dart pub get
 
     - name: Install dependencies
       run: flutter pub get
