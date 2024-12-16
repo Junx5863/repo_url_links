@@ -20,10 +20,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-glx
+
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: 'stable'
+
+    - name: Switch to stable channel
+      run: flutter channel stable && flutter upgrade
+
+    - name: Validate Flutter installation
+      run: flutter doctor
+
+    - name: Print Flutter version
+      run: flutter --version
 
     - name: Build APK
       run: |
@@ -31,6 +45,10 @@ jobs:
         flutter build apk \
           --dart-define=BASE_URL=${{ github.event.inputs.base_url }} \
           --dart-define=SERVICE_NAME=${{ github.event.inputs.service_name }}
+
+    - name: Verify Build Success
+      if: ${{ success() }}
+      run: echo "Build completed successfully!"
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
