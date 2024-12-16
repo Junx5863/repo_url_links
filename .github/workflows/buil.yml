@@ -23,7 +23,9 @@ jobs:
       uses: dart-lang/setup-dart@v1
 
     - name: Install Pub Dependencies
-      run: dart pub get
+      run: |
+        flutter upgrade
+        dart pub get
 
     - name: Install dependencies
       run: flutter pub get
