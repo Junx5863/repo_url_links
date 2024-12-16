@@ -1,0 +1,39 @@
+name: Build App with Custom Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL for the API'
+        required: true
+        default: 'https://rickandmortyapi.com/api/'
+      service_name:
+        description: 'Name of the service (e.g., RickAndMorty, AnotherService)'
+        required: true
+        default: 'RickAndMorty'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'stable'
+
+    - name: Build APK
+      run: |
+        flutter pub get
+        flutter build apk \
+          --dart-define=BASE_URL=${{ github.event.inputs.base_url }} \
+          --dart-define=SERVICE_NAME=${{ github.event.inputs.service_name }}
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release.apk
+        path: build/app/outputs/flutter-apk/app-release.apk
