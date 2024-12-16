@@ -21,10 +21,10 @@ jobs:
 
     - name: Setup Dart
       uses: dart-lang/setup-dart@v1
-      
+
     - name: Debug environment
       run: |
-        which flutter
+        dart --version
         flutter --version
         flutter doctor
 
