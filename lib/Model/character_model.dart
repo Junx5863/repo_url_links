@@ -38,7 +38,7 @@ class Info {
   final int? count;
   final int? pages;
   final String? next;
-  final dynamic prev;
+  final String? prev;
 
   Info({
     this.count,
@@ -65,10 +65,10 @@ class Info {
 class Result {
   final int? id;
   final String? name;
-  final Status? status;
-  final Species? species;
+  final String? status;
+  final String? species;
   final String? type;
-  final Gender? gender;
+  final String? gender;
   final Location? origin;
   final Location? location;
   final String? image;
@@ -94,10 +94,10 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
         name: json["name"],
-        status: statusValues.map[json["status"]]!,
-        species: speciesValues.map[json["species"]]!,
+        status: json["status"],
+        species: json["species"],
         type: json["type"],
-        gender: genderValues.map[json["gender"]]!,
+        gender: json["gender"],
         origin:
             json["origin"] == null ? null : Location.fromJson(json["origin"]),
         location: json["location"] == null
@@ -115,10 +115,10 @@ class Result {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "status": statusValues.reverse[status],
-        "species": speciesValues.reverse[species],
+        "status": status,
+        "species": species,
         "type": type,
-        "gender": genderValues.reverse[gender],
+        "gender": gender,
         "origin": origin?.toJson(),
         "location": location?.toJson(),
         "image": image,
@@ -128,11 +128,6 @@ class Result {
         "created": created?.toIso8601String(),
       };
 }
-
-enum Gender { FEMALE, MALE, UNKNOWN }
-
-final genderValues = EnumValues(
-    {"Female": Gender.FEMALE, "Male": Gender.MALE, "unknown": Gender.UNKNOWN});
 
 class Location {
   final String? name;
@@ -153,16 +148,6 @@ class Location {
         "url": url,
       };
 }
-
-enum Species { ALIEN, HUMAN }
-
-final speciesValues =
-    EnumValues({"Alien": Species.ALIEN, "Human": Species.HUMAN});
-
-enum Status { ALIVE, DEAD, UNKNOWN }
-
-final statusValues = EnumValues(
-    {"Alive": Status.ALIVE, "Dead": Status.DEAD, "unknown": Status.UNKNOWN});
 
 class EnumValues<T> {
   Map<String, T> map;
